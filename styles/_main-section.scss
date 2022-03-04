@@ -1,0 +1,157 @@
+.search-bar {
+  margin-top: 100px;
+
+  &__form {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__input {
+    width: 40%;
+    padding: 10px;
+    border: 2px solid rgb(54, 54, 54);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    outline: none;
+    color: black;
+    font-size: larger;
+    font-weight: bold;
+
+    &::placeholder {
+      opacity: 0.3;
+    }
+  }
+
+  &__btn {
+    cursor: pointer;
+    width: 100px;
+    border: 2px solid rgb(54, 54, 54);
+    background: rgb(25, 221, 221);
+    text-align: center;
+    border-left: none;
+    color: #fff;
+    border-radius: 0 12px 12px 0;
+
+    &:hover {
+      background-color: rgb(40, 199, 199);
+    }
+  }
+
+  .fa {
+    padding: 10px;
+    font-size: 21px;
+  }
+}
+
+// RESULTS BOX
+
+.results {
+  height: 400px;
+  max-width: 46%;
+  border: 2px solid rgb(54, 54, 54);
+  border-radius: 12px;
+  background-color: white;
+  margin: 60px auto 0 auto;
+
+  & h3 {
+    border-bottom: 1px solid lightgray;
+    margin: 12px 0 0 0;
+    padding-bottom: 12px;
+  }
+
+  &__container {
+    text-align: left;
+    height: 75%;
+    overflow: auto;
+    border-bottom: 1px solid lightgray;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(25, 221, 221) white;
+
+    &__list {
+      margin: 0;
+
+      & a {
+        text-decoration: none;
+        display: inline-block;
+        vertical-align: middle;
+        color: rgb(54, 54, 54);
+
+        &:hover {
+          color: rgb(25, 221, 221);
+        }
+      }
+    }
+  }
+
+  &__clear-btn {
+    float: right;
+    margin: 10px;
+    padding: 5px;
+    background-color: tomato;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid gray;
+    box-shadow: 2px 2px 5px gray;
+
+    &:hover {
+      cursor: pointer;
+      background-color: red;
+    }
+  }
+}
+
+//RESPONSIVE DESIGN
+
+@media all and (max-width: 480px) {
+  main {
+    background: linear-gradient(rgba(241, 241, 241, 0.7)),
+      url("https://miro.medium.com/max/1200/1*E9u3Xd8QM_Ttlr3Ytqn0Tw.png")
+        no-repeat;
+    background-size: cover;
+    color: rgb(41, 41, 41);
+  }
+
+  .search-bar {
+    margin-top: 50px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__form {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__input {
+      width: 90%;
+      border: 2px solid rgb(54, 54, 54);
+      border-radius: 12px;
+    }
+
+    &__btn {
+      width: 40%;
+      background-color: rgb(25, 221, 221);
+      border: 1px solid rgb(54, 54, 54);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+
+      &:hover {
+        background-color: rgb(27, 182, 182);
+      }
+    }
+  }
+
+  .results {
+    max-width: 90%;
+    margin: 20px auto;
+
+    & h3 {
+      font-size: 18px;
+    }
+  }
+}

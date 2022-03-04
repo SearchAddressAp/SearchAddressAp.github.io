@@ -1,0 +1,20 @@
+footer {
+  background-color: rgb(70, 70, 70);
+  color: white;
+  border-top: 5px solid #c2c2c2;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer p {
+  float: inline-end;
+}
+
+@media all and (max-width: 480px) {
+  .footer p {
+    font-size: 12px;
+    margin: 14px 0;
+  }
+}
