@@ -74,7 +74,7 @@ export async function searchPage(ctx) {
     }
   }
 
-  function onClear(e) {
+  function onClear() {
     towns = [];
     ctx.page.redirect("/search");
   }
