@@ -4,7 +4,9 @@ Web Page for searchin addresses!
 
 The page is usable on mobile and desktop devices
 
-------------------------------------------------
+Link to SearchAddress web page: https://searchaddressap.github.io/
+
+---
 
 ##Used Technologies:
 
@@ -12,11 +14,11 @@ The page is usable on mobile and desktop devices
 
 2.HTML
 
-3.CSS and SASS 
+3.CSS and SASS
 
 4.Lit-HTML and Page
 
-------------------------------------------------- 
+---
 
 ##Server:
 
