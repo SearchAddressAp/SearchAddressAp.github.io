@@ -55,6 +55,7 @@ const resultsTemplate = (town) => html` <li class="list__item">
 export async function searchPage(ctx) {
   const params = ctx.querystring.split("=")[1];
   let towns = "";
+  let search = "";
 
   if (params) {
     let results = await searchTown(decodeURIComponent(params));
@@ -66,15 +67,15 @@ export async function searchPage(ctx) {
   function onSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const search = formData.get("search");
+    search = formData.get("search");
 
     if (search) {
       ctx.page.redirect("/search?search=" + encodeURIComponent(search));
     }
   }
 
-  function onClear() {
-    let element = document.getElementById("myList");
-    element.innerHTML = "";
+  function onClear(e) {
+    towns = [];
+    ctx.page.redirect("/search");
   }
 }
