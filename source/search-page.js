@@ -102,6 +102,13 @@ export async function searchPage(ctx) {
   function select(event) {
     let selectedData = event.textContent;
     document.getElementById("inp").value = selectedData;
+    document.querySelector(".results__container__list").innerHTML =
+      "<li class='list__item'>" +
+      `<a href="https://www.google.com/maps/search/ + ${selectedData}">` +
+      selectedData +
+      "</a>" +
+      "</li>";
+
     document.querySelector(".search-bar__dropdown").classList.remove("active");
   }
 
