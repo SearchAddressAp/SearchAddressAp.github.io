@@ -1,5 +1,8 @@
 .search-bar {
-  margin-top: 100px;
+  margin-top: 50px;
+
+  &__form-container {
+  }
 
   &__form {
     margin: 0 auto;
@@ -38,6 +41,41 @@
     }
   }
 
+  &__dropdown {
+    width: 45%;
+    margin: 0 auto;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    background: white;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+    opacity: 0;
+
+    & li {
+      text-align: start;
+      list-style: none;
+      padding: 8px 16px;
+      width: 100%;
+      cursor: default;
+      border-radius: 3px;
+      display: none;
+      font-size: 14px;
+
+      &:hover {
+        background-color: #efefef;
+      }
+    }
+
+    &.active {
+      opacity: 1;
+      pointer-events: auto;
+
+      & li {
+        display: block;
+      }
+    }
+  }
+
   .fa {
     padding: 10px;
     font-size: 21px;
@@ -52,7 +90,7 @@
   border: 2px solid rgb(54, 54, 54);
   border-radius: 12px;
   background-color: white;
-  margin: 60px auto 0 auto;
+  margin: 20px auto 0 auto;
 
   & h3 {
     border-bottom: 1px solid lightgray;
@@ -143,6 +181,13 @@
       &:hover {
         background-color: rgb(27, 182, 182);
       }
+    }
+
+    &__dropdown {
+      width: 75%;
+      position: absolute;
+      top: 246px;
+      left: 54px;
     }
   }
 

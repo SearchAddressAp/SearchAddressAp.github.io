@@ -4,32 +4,30 @@ import { html } from "./library.js";
 const searchTemplate = (
   towns = "",
   onSearch,
-
+  onInput,
   onClear,
   params = ""
 ) => html` <section id="search" class="search">
   <div class="content-wrapper">
     <section class="search-bar">
       <h2 class="search-bar__title">Find Address</h2>
-
-      <form @submit=${onSearch} class="search-bar__form" action="search">
-        <input
-          type="text"
-          id="inp"
-          class="search-bar__input"
-          placeholder="Search address..."
-          name="search"
-          .value=${params}
-        />
-        <button type="submit" class="search-bar__btn">
-          <i class="fa fa-search"></i>
-        </button>
-      </form>
-      <!-- <div class="autocompl-dropdown">
-          <li>something</li>
-          <li>something</li>
-          <li>something</li>
-      </div> -->
+      <div class="search-bar__form-container">
+        <form @submit=${onSearch} class="search-bar__form" action="search">
+          <input
+            @input=${onInput}
+            type="text"
+            id="inp"
+            class="search-bar__input"
+            placeholder="Search address..."
+            name="search"
+            .value=${params}
+          />
+          <button type="submit" class="search-bar__btn">
+            <i class="fa fa-search"></i>
+          </button>
+        </form>
+        <div class="search-bar__dropdown"><!--search suggestions--></div>
+      </div>
     </section>
     <section class="results">
       <h3 class="results__title">Results:</h3>
@@ -55,19 +53,49 @@ const resultsTemplate = (town) => html` <li class="list__item">
 export async function searchPage(ctx) {
   const params = ctx.querystring.split("=")[1];
   let towns = "";
-  let search = "";
+  let inp = "";
 
   if (params) {
     let results = await searchTown(decodeURIComponent(params));
     towns = Object.values(results).reduce((a, b) => a.concat(b), []);
   }
 
-  ctx.render(searchTemplate(towns, onSearch, onClear));
+  async function onInput(e) {
+    inp = e.target.value;
+    if (inp) {
+      let result = await searchTown(decodeURIComponent(inp));
+      let cities = Object.values(result)
+        .reduce((a, b) => a.concat(b), [])
+        .map((data) => {
+          return (data = "<li>" + data.text + "</li>");
+        });
+      document.querySelector(".search-bar__dropdown").classList.add("active");
+      showSuggestions(cities);
+    } else {
+      document
+        .querySelector(".search-bar__dropdown")
+        .classList.remove("active");
+    }
+  }
+
+  function showSuggestions(list) {
+    let listData;
+    if (!list.length) {
+      let userValue = document.getElementById("inp").value;
+      listData = "<li>" + userValue + "</li>";
+    } else {
+      listData = list.join("");
+    }
+
+    document.querySelector(".search-bar__dropdown").innerHTML = listData;
+  }
+
+  ctx.render(searchTemplate(towns, onSearch, onInput, onClear, params));
 
   function onSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    search = formData.get("search");
+    const search = formData.get("search");
 
     if (search) {
       ctx.page.redirect("/search?search=" + encodeURIComponent(search));
