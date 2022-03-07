@@ -1,4 +1,4 @@
-import { searchTown } from "./api_requests.js";
+import { searchAddress, searchTown } from "./api_requests.js";
 import { html } from "./library.js";
 
 const searchTemplate = (
@@ -34,9 +34,7 @@ const searchTemplate = (
       <!--Show after click Search button-->
       <div class="results__container">
         <ol id="myList" class="results__container__list">
-          ${towns.length == 0
-            ? html`<p class="no-result">No reseults</p>`
-            : towns.map(resultsTemplate)}
+          <!--display results from search-->
         </ol>
       </div>
       <button @click=${onClear} class="results__clear-btn">clear</button>
@@ -44,24 +42,18 @@ const searchTemplate = (
   </div>
 </section>`;
 
-const resultsTemplate = (town) => html` <li class="list__item">
-  <a href="https://www.google.com/maps/place/ + ${town.text}"
-    ><p>${town.text}</p></a
-  >
-</li>`;
+// const resultsTemplate = (town) => html` <li class="list__item">
+//   <a href="https://www.google.com/maps/place/ + ${town.text}"
+//     ><p>${town.text}</p></a
+//   >
+// </li>`;
 
 export async function searchPage(ctx) {
-  const params = ctx.querystring.split("=")[1];
-
+  // const params = ctx.querystring.split("=")[1];
   let towns = "";
   let inp = "";
 
-  if (params) {
-    let results = await searchTown(decodeURIComponent(params));
-    towns = Object.values(results).reduce((a, b) => a.concat(b), []);
-  }
-
-  //on text input showw suggestions
+  //on text input showw suggestions:
 
   async function onInput(e) {
     inp = e.target.value;
@@ -91,7 +83,7 @@ export async function searchPage(ctx) {
     }
   }
 
-  // show autocomplate dropdown menu and if there's no info show the entered text in the menu
+  // show autocomplate dropdown menu and if there's no info show the entered text in the menu:
 
   function showSuggestions(list) {
     let listData;
@@ -105,7 +97,7 @@ export async function searchPage(ctx) {
     document.querySelector(".search-bar__dropdown").innerHTML = listData;
   }
 
-  // select an option from the autocomplete dropdown menu
+  // select an option from the autocomplete dropdown menu:
 
   function select(event) {
     let selectedData = event.textContent;
@@ -113,20 +105,36 @@ export async function searchPage(ctx) {
     document.querySelector(".search-bar__dropdown").classList.remove("active");
   }
 
-  ctx.render(searchTemplate(towns, onSearch, onInput, onClear, params));
+  ctx.render(searchTemplate(towns, onSearch, onInput, onClear));
 
-  function onSearch(event) {
+  // search for inputed text and show it in the result box:
+
+  async function onSearch(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const search = formData.get("search");
 
-    if (search) {
-      ctx.page.redirect("/search?search=" + encodeURIComponent(search));
-    }
+    let results = await searchAddress(search);
+    console.log(results);
+    towns = Object.values(results)[1]
+      .map((town) => {
+        return (town =
+          "<li class='list__item'>" +
+          `<a href="https://www.google.com/maps/search/ + ${town.address}">` +
+          town.address +
+          "</a>" +
+          "</li>");
+      })
+      .join("");
+
+    document.querySelector(".results__container__list").innerHTML = towns;
+
+    // if (search) {
+    //   ctx.page.redirect("/search?search=" + encodeURIComponent(search));
+    // }
   }
 
   function onClear() {
-    towns = [];
-    ctx.page.redirect("/search");
+    document.querySelector(".results__container__list").innerHTML = "";
   }
 }

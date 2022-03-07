@@ -519,6 +519,7 @@ main {
 }
 
 .results__container__list a {
+  padding: 16px;
   text-decoration: none;
   display: inline-block;
   vertical-align: middle;
