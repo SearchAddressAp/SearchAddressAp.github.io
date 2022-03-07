@@ -52,6 +52,7 @@ const resultsTemplate = (town) => html` <li class="list__item">
 
 export async function searchPage(ctx) {
   const params = ctx.querystring.split("=")[1];
+
   let towns = "";
   let inp = "";
 
@@ -60,23 +61,37 @@ export async function searchPage(ctx) {
     towns = Object.values(results).reduce((a, b) => a.concat(b), []);
   }
 
+  //on text input showw suggestions
+
   async function onInput(e) {
     inp = e.target.value;
+    let inputSuggestionsList = document.querySelector(".search-bar__dropdown");
+
     if (inp) {
       let result = await searchTown(decodeURIComponent(inp));
+
       let cities = Object.values(result)
         .reduce((a, b) => a.concat(b), [])
         .map((data) => {
           return (data = "<li>" + data.text + "</li>");
         });
-      document.querySelector(".search-bar__dropdown").classList.add("active");
+
+      inputSuggestionsList.classList.add("active");
       showSuggestions(cities);
+
+      let alllist = inputSuggestionsList.querySelectorAll("li");
+      for (let i = 0; i < alllist.length; i++) {
+        alllist[i].setAttribute("onclick", "select(this)");
+        alllist[i].onclick = () => {
+          select(alllist[i]);
+        };
+      }
     } else {
-      document
-        .querySelector(".search-bar__dropdown")
-        .classList.remove("active");
+      inputSuggestionsList.classList.remove("active");
     }
   }
+
+  // show autocomplate dropdown menu and if there's no info show the entered text in the menu
 
   function showSuggestions(list) {
     let listData;
@@ -88,6 +103,14 @@ export async function searchPage(ctx) {
     }
 
     document.querySelector(".search-bar__dropdown").innerHTML = listData;
+  }
+
+  // select an option from the autocomplete dropdown menu
+
+  function select(event) {
+    let selectedData = event.textContent;
+    document.getElementById("inp").value = selectedData;
+    document.querySelector(".search-bar__dropdown").classList.remove("active");
   }
 
   ctx.render(searchTemplate(towns, onSearch, onInput, onClear, params));
