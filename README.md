@@ -10,11 +10,11 @@ Link to SearchAddress web page: https://searchaddressap.github.io/
 
 ## Used Technologies:
 
--   [x] JavaScript;
+-   [x] JavaScript
 
--   [x] HTML;
+-   [x] HTML
 
--   [x] CSS and SASS;
+-   [x] CSS and SASS
 
 -   [x] Lit-HTML and Page
 
