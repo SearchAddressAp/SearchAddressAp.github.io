@@ -8,18 +8,18 @@ Link to SearchAddress web page: https://searchaddressap.github.io/
 
 ---
 
-##Used Technologies:
+## Used Technologies:
 
-1.JavaScript
+-   [x] JavaScript;
 
-2.HTML
+-   [x] HTML;
 
-3.CSS and SASS
+-   [x] CSS and SASS;
 
-4.Lit-HTML and Page
+-   [x] Lit-HTML and Page
 
 ---
 
-##Server:
+## Server:
 
 Endpoint: https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer

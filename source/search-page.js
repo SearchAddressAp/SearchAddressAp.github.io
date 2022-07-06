@@ -122,7 +122,7 @@ export async function searchPage(ctx) {
     const search = formData.get("search");
 
     let results = await searchAddress(search);
-    console.log(results);
+
     towns = Object.values(results)[1]
       .map((town) => {
         return (town =
